@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.thymeleaf.org">
+<head th:replace="/admin/fragments :: head">
+</head>
+<body class="sb-nav-fixed">
+
+	<div th:replace="/admin/fragments :: navbar"></div>
+
+	<div id="layoutSidenav" style = "overflow: hidden">
+
+		<div th:replace="/admin/fragments :: menu"></div>
+
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="main-content">
+					<div>
+						<h3 style="text-align: center;">Tài khoản</h3>
+					</div>
+					<form>
+
+						<div class="main-content-inner">
+							<div class="page-content">
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="widget-box table-filter">
+											<div class="table-btn-controls">
+												<div class="pull-right tableTools-container">
+													<div class="dt-buttons btn-overlap btn-group" text-align="center">
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-12">
+												<div class="table-responsive">
+													<table class="table table-bordered">
+														<thead>
+															<tr>
+																<th>Họ tên</th>
+																<th>Tên đăng nhập</th>
+																<th>Vai trò</th>
+																<th>Trạng thái</th>
+																<th>Hành động</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr th:each="customer :${listActive}">
+																<td th:text="${customer.hoTen}"></td>
+																<td th:text="${customer.tenDangNhap}"></td>
+																<td th:text="${customer.vaiTro[0].tenVaiTro}"></td>
+																<td th:if="${customer.trangThai==1}"><span>Đang hoạt động</span></td>
+																<td th:if="${customer.trangThai==0}"><span>Ngưng hoạt động</span></td>
+																<td>
+																	<form th:action="@{/quan-tri/tai-khoan/danh-sach}"  method="post" onsubmit="return confirm('Bạn có chắc với hành động của mình?');">
+																		<input type="hidden" th:value="${customer.id}" name="id" id="id">
+																		<button th:if="${customer.vaiTro[0].tenVaiTro=='Người dùng'}" name="action" value="update" type="submit" class="btn btn-primary" style="font-size: 12px; padding: 5px 10px; width: 100px;">Cấp quyền</button>
+																		<button type="submit" class="btn btn-danger" name="action" value="delete" style="font-size: 12px; padding: 5px 10px; width: 50px;">Xóa</button>
+																	</form>
+																</td>
+															
+															</tr>
+															<tr th:each="customer :${listNotActive}">
+																<td th:text="${customer.hoTen}"></td>
+																<td th:text="${customer.tenDangNhap}"></td>
+																<td th:text="${customer.vaiTro[0].tenVaiTro}"></td>
+																<td th:if="${customer.trangThai==1}"><span>Đang hoạt động</span></td>
+																<td th:if="${customer.trangThai==0}"><span>Ngưng hoạt động</span></td>
+																<td>
+																	<form th:action="@{/quan-tri/tai-khoan/danh-sach}"  method="post" onsubmit="return confirm('Bạn có chắc muốn khôi phục tài khoản?');">
+																		<input type="hidden" th:value="${customer.id}" name="id" id="id">
+																		<button type="submit" class="btn btn-warning" name="action" value="restore" style="font-size: 12px; padding: 5px 10px; width: 80px;">Khôi phục</button>
+																	</form>
+																</td>
+															
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</main>
+
+			<footer th:replace="/admin/fragments :: footer"> </footer>
+
+		</div>
+	</div>
+
+	<div th:replace="/admin/fragments :: scipt"></div>
+</body>
+</html>

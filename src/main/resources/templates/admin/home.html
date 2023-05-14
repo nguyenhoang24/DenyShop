@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.thymeleaf.org" >
+<head th:replace="/admin/fragments :: head">
+</head>
+<body class="sb-nav-fixed">
+	
+	<div th:replace="/admin/fragments :: navbar">
+	</div>
+	
+	<div id="layoutSidenav">
+		
+		<div th:replace="/admin/fragments :: menu">
+		</div>
+		
+		<div id="layoutSidenav_content">
+			<main>
+				<div><h1>TAO LÀ QUẢN TRỊ</h1></div>
+			</main>
+			
+			<footer th:replace="/admin/fragments :: footer">
+			</footer>
+			
+		</div>
+	</div>
+	
+	<div th:replace="/admin/fragments :: scipt">
+	</div>
+	
+</body>
+</html>

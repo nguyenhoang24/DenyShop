@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.thymeleaf.org">
+<head th:replace="/admin/fragments :: head">
+</head>
+<body class="sb-nav-fixed">
+
+	<div th:replace="/admin/fragments :: navbar"></div>
+
+	<div id="layoutSidenav" style = "overflow: hidden">
+
+		<div th:replace="/admin/fragments :: menu"></div>
+
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="main-content">
+					<div>
+						<h3 style="text-align: center;">Đơn hàng</h3>
+					</div>
+					<form id="formSubmit" method="post" >
+
+						<div class="main-content-inner">
+							<div class="page-content">
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="widget-box table-filter">
+											<div class="table-btn-controls">
+												<div class="pull-right tableTools-container">
+													<div class="dt-buttons btn-overlap btn-group" text-align="center">
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-12">
+												<div class="table-responsive">
+													<table class="table table-bordered">
+														<thead>
+															<tr>
+																<th>Khách hàng</th>
+																<th>Ngày đặt hàng</th>
+																<th>Số điện thoại</th>
+																<th>Địa chỉ</th>
+																<th>Tổng tiền</th>
+																<th>Trạng thái</th>
+																<th>Hành động</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr th:each="order :${orders}">
+																<td th:text="${order.taiKhoan.hoTen}"></td>
+																<td th:text="${order.ngayDat}"></td>
+																<td th:text="${order.soDienThoai}"></td>
+																<td th:text="${order.diaChiNhanHang}"></td>
+																<td th:text="${order.tongTien}"></td>
+																<td th:if="${order.trangThai==0}"><span>Đang chờ xác nhận</span></td>
+																<td th:if="${order.trangThai!=0}"><span>Đã xác nhận</span></td>
+																<td>
+																	<form th:action="@{/quan-tri/don-hang/danh-sach}" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xác nhận đơn hàng?');">
+																		<input type="hidden" th:value="${order.id}" name="id" id="id">
+																		<button type="submit" class="btn btn-primary" style="font-size: 12px; padding: 5px 10px; width: 100px;">Xác nhận</button>
+																	</form>
+																</td>
+															
+															</tr>
+															<tr th:each="order :${orders2}">
+																<td th:text="${order.taiKhoan.hoTen}"></td>
+																<td th:text="${order.ngayDat}"></td>
+																<td th:text="${order.soDienThoai}"></td>
+																<td th:text="${order.diaChiNhanHang}"></td>
+																<td th:text="${order.tongTien}"></td>
+																<td th:if="${order.trangThai==0}"><span>Đang chờ xác nhận</span></td>
+																<td th:if="${order.trangThai!=0}"><span>Đã xác nhận</span></td>
+																<td></td>
+															
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</main>
+
+			<footer th:replace="/admin/fragments :: footer"> </footer>
+
+		</div>
+	</div>
+
+	<div th:replace="/admin/fragments :: scipt"></div>
+</body>
+</html>

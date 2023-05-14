@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.thymeleaf.org">
+<head th:replace="/admin/fragments :: head">
+</head>
+<body class="sb-nav-fixed">
+
+	<div th:replace="/admin/fragments :: navbar"></div>
+
+	<div id="layoutSidenav" style = "overflow: hidden">
+
+		<div th:replace="/admin/fragments :: menu"></div>
+
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="main-content">
+					<form th:action="@{/quan-tri/loai-san-pham/danh-sach}" id="formSubmit" method="post">
+
+						<div class="main-content-inner">
+							<div class="page-content">
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="widget-box table-filter">
+											<div class="table-btn-controls">
+												<div class="pull-right tableTools-container">
+													<div class="dt-buttons btn-overlap btn-group" text-align="center">
+														<url var="{themloaisanpham}" th:value="@{/quan-tri/loai-san-pham/chinh-sua}" />
+														<a flag="info" class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" justify-content: center data-toggle="tooltip" title='Thêm loại sản phẩm' 
+															th:href="@{/quan-tri/loai-san-pham/chinh-sua}"> 
+														<span> <i class="fa fa-plus-circle bigger-110 purple"></i> </span>
+														</a>
+													</div>
+													<button type="button" onclick="warningBeforeDelete()" class="btn btn-primary" title='Xóa loại sản phẩm'><i class="fa-solid fa-trash"></i></button>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-12">
+												<div class="table-responsive">
+													<table class="table table-bordered">
+														<thead>
+															<tr>
+																<th><input type="checkbox" id="checkAll"></th>
+																<th>Tên loại sản phẩm</th>
+																<th>Mô tả ngắn</th>
+																<th>Thao tác</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr th:each="item :${list}">
+																<td><input type="checkbox" id="checkbox_${item.id}" th:value="${item.id}"></td>
+																<td th:text ="${item.tenLoaiSanPham}"></td>
+																<td th:text ="${item.moTaNgan}"></td>
+																<td><a class="btn btn-sm btn-primary bi bi-trash" ata-toggle="tooltip" title="Cập nhật bài viết" 
+																		th:href="@{/quan-tri/loai-san-pham/chinh-sua?id={id}(id=${item.id})}"><i class="fa-solid fa-pen-to-square"></i></a>
+																</td>
+															
+															</tr>
+														</tbody>
+													</table>
+													<ul class="pagination" id="pagination"></ul>
+													<input type="hidden" value="" id="page" name="page" /> <input
+														type="hidden" value="" id="limit" name="limit" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</main>
+
+			<footer th:replace="/admin/fragments :: footer"> </footer>
+
+		</div>
+	</div>
+
+	<div th:replace="/admin/fragments :: scipt"></div>
+	
+<script>
+	function warningBeforeDelete() {
+		swal.fire({
+		  title: "Xác nhận xóa",
+		  text: "Bạn có chắc chắn muốn xóa hay không?",
+		  type: "warning",
+		  showCancelButton: true,
+		  confirmButtonClass: "btn-success",
+		  cancelButtonClass: "btn-danger",
+		  confirmButtonText: "Xác nhận",
+		  cancelButtonText: "Hủy bỏ",
+		}).then(function(isConfirm) {
+		  if (isConfirm) {
+				var ids = $('tbody input[type=checkbox]:checked').map(function () {
+		            return $(this).val();
+		        }).get();
+				deleteLoaiSanPham(ids);
+		  }
+		});
+	} 
+	
+	function deleteLoaiSanPham(data) {
+	$.ajax({
+	    url: '/api/loai-san-pham',
+	    type: 'DELETE',
+	    contentType: 'application/json',
+	    data: JSON.stringify(data),
+	    success: function (result) {
+	        window.location.href = "";
+	    },
+	    error: function (error) {
+	    	alert("sai")
+	    	window.location.href = "";
+	    }
+	});
+	}
+</script>
+
+</body>
+</html>

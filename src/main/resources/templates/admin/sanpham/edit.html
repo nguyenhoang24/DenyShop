@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.thymeleaf.org">
+<head th:replace="/admin/fragments :: head">
+</head>
+<body class="sb-nav-fixed">
+
+	<div th:replace="/admin/fragments :: navbar"></div>
+
+	<div id="layoutSidenav">
+
+		<div th:replace="/admin/fragments :: menu"></div>
+
+		<div id="layoutSidenav_content">
+			<main>
+				<form th:object="${model}" method="post" id="formSubmit" enctype="multipart/form-data"> 
+				
+					<h3 th:unless="${model.id}" class="text-center" style="margin-top:20px">Thêm sản phẩm</h3>
+					<h3 th:if="${model.id}" class="text-center" style="margin-top:20px">Cập nhật sản phẩm</h3>
+				
+					<div class="container">
+						<div class="row" >
+						
+							<div class="form-group">
+								  <label for="loaiSanPham" class="col-sm-3 control-label no-padding-right">Loại sản phẩm:</label>
+								  <div class="col-sm-9">
+								  	 <select th:field="*{loaiSanPham}">
+								  	 	<option value="" label="-- Chọn loại sản phẩm --"/>
+								  	 	<option th:each="i : ${loaiSanPham}" th:value="${i.tenLoaiSanPham}" th:text="${i.tenLoaiSanPham}">
+  										</option>
+								  	 </select>
+								  </div>
+							</div>
+							
+							<div class="col-12">
+								<label for="categoryCode" class="col-sm-3 control-label no-padding-right">Tên sản phẩm:</label>
+								<div class="col-sm-9">
+									<input class="col-xs-10 col-sm-5" id="tenSanPham" name="tenSanPham" th:field="*{tenSanPham}" th:value="${model.tenSanPham}"/>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1">Ảnh</label>
+								<div class="col-sm-9">
+									<input type="file" class="col-xs-10 col-sm-5" id="img" th:name="img" th:field="*{img}" th:value="${model.img}"/>
+								</div>
+							</div>
+							
+							
+							<div class="form-group">
+								<label for="categoryCode" class="col-sm-3 control-label no-padding-right">Mô tả sản phẩm:</label>
+								<div class="col-sm-9">
+									<textarea  class="col-xs-10 col-sm-5" id="moTaSanPham" name="moTaSanPham" th:field="*{moTaSanPham}" th:value="${model.moTaSanPham}"/>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="categoryCode" class="col-sm-3 control-label no-padding-right">Giá nhập:</label>
+								<div class="col-sm-9">
+									<input type="number" class="col-xs-10 col-sm-5" id="giaNhap" name="giaNhap" th:field="*{giaNhap}" th:value="${model.giaNhap}"/>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="categoryCode" class="col-sm-3 control-label no-padding-right">Giá bán:</label>
+								<div class="col-sm-9">
+									<input type="number" class="col-xs-10 col-sm-5" id="giaBan" name="giaBan" th:field="*{giaBan}" th:value="${model.giaBan}"/>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="categoryCode" class="col-sm-3 control-label no-padding-right">Số lượng:</label>
+								<div class="col-sm-9">
+									<input class="col-xs-10 col-sm-5" id="soLuong" name="soLuong" th:field="*{soLuong}" th:value="${model.soLuong}"/>
+								</div>
+							</div>
+							
+						
+						</div>
+							<input type="hidden" th:value="${model.id}" name="id" id="id"/>
+							<div style="margin-top:10px">
+									<button th:if="${model.id}"  class="btn btn-info" type="button" id="btnAddOrUpdateSanPham" name="btnAddOrUpdateLoaiSanPham">
+										<i class="ace-icon fa fa-check bigger-110"></i>Cập nhật
+									</button>
+									<button th:unless="${model.id}" class="btn btn-info" type="button" id="btnAddOrUpdateSanPham" name="btnAddOrUpdateLoaiSanPham">
+										<i class="ace-icon fa fa-check bigger-110"></i>Thêm
+									</button>
+							
+								<button class="btn" type="reset">
+									<i class="ace-icon fa fa-undo bigger-110"></i>Hủy
+								</button>
+							</div>
+						</div>
+				</form>
+			</main>
+
+			<footer th:replace="/admin/fragments :: footer"> </footer>
+
+		</div>
+	</div>
+	
+	<div th:replace="/admin/fragments :: scipt"></div>
+<script>
+
+	
+	$( document ).ready(function() {
+		debugger;
+	    $('#btnAddOrUpdateSanPham').click(function (e) {
+			e.preventDefault();
+			var data = new FormData();
+		    var formData = $('#formSubmit').serializeArray();
+		    var img2 = $('#img').val().split('\\').pop();
+		    $.each(formData, function (i, v) {
+	            data[""+v.name+""] = v.value;
+		    });
+		    data["img"] = img2;
+		    console.log(data)
+		    var id = $('#id').val();
+		    if (id == "") {
+		    	uploadImage();
+		    	addSanPham(data);
+		    } else {
+		    	uploadImage();
+		    	updateSanPham(data);
+		    } 
+		});
+	});
+
+	
+	
+	function addSanPham(data) {
+		$.ajax({
+            url: '/api/san-pham',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (result) {
+            	window.location.href = "/quan-tri/san-pham/danh-sach";
+            },
+            error: function (error) {
+            	alert("sai")
+            	window.location.href = "/quan-tri/san-pham/chinh-sua";
+            }
+        });
+	}
+	
+	function updateSanPham(data) {
+		$.ajax({
+            url: '/api/san-pham',
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (result) {
+            	window.location.href = "/quan-tri/san-pham/danh-sach";
+            },
+            error: function (error) {
+            	alert("sai")
+            	window.location.href = "/quan-tri/san-pham/danh-sach";
+            }
+        });
+	}
+	
+	function uploadImage() {
+		var fileInput = document.getElementById('img');
+		var file = fileInput.files[0];
+		var formData = new FormData();
+		formData.append('img', file);
+		$.ajax({
+            url: '/api/upload',
+            type: 'POST',
+            contentType: 'application/json',
+            enctype: 'multipart/form-data',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+            },
+            error: function (error) {
+            	alert("upload sai")
+            }
+        });
+	}
+	
+</script>
+
+</body>
+</html>

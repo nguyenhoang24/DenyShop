@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.thymeleaf.org" >
+<head>
+<title>Chi tiết</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Colo Shop Template">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" th:href="@{/web/styles/bootstrap4/bootstrap.min.css}">
+<link th:href="@{/web/plugins/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" th:href="@{/web/plugins/OwlCarousel2-2.2.1/owl.carousel.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/web/plugins/OwlCarousel2-2.2.1/owl.theme.default.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/web/plugins/OwlCarousel2-2.2.1/animate.css}">
+<link rel="stylesheet" th:href="@{/web/plugins/themify-icons/themify-icons.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/web/styles/single_styles.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/web/styles/single_responsive.css}">
+</head>
+
+<body>
+
+<div class="super_container">
+
+	<!-- Header -->
+	<div th:replace="/web/fragments :: header"></div>
+
+	<!-- Hamburger Menu -->
+
+	<div class="container single_product_container">
+		<div class="row">
+			<div class="col">
+
+				<!-- Breadcrumbs -->
+
+				<div class="breadcrumbs d-flex flex-row align-items-center">
+					<ul>
+						<li><a th:href="@{/}">Trang chủ</a></li>
+						<li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>Sản phẩm</a></li>
+						<li class="active"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>Chi tiết</a></li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+		
+		<form th:action="@{/add-to-cart}" th:object="${model}" method="post">
+			<div class="row">
+			<div class="col-lg-7">
+				<div class="single_product_pics">
+					<img th:src="@{'/getimage/'+${model.img}}" width="500" height="358" alt="">
+				</div>
+			</div>
+			<div class="col-lg-5">
+				<div class="product_details">
+					<div class="product_details_title">
+						<h2 th:text="${model.tenSanPham}"></h2>
+						<p th:text="${model.moTaSanPham}"></p>
+					</div>
+					<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
+						<span class="ti-truck"></span><span>miễn phí giao hàng</span>
+					</div>
+					<div class="original_price"th:text="${model.giaBan} * 1.25" ></div>
+					<div class="product_price" th:text="${model.giaBan}"></div>
+					<ul class="star_rating">
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star" aria-hidden="true"></i></li>
+						<li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+					</ul>
+					<div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
+						<span>Số lượng:</span>
+						<input type="number" id="quantity_input" name="quantity" value="1" min="1" style="padding: 8px;
+																										  font-size: 16px;
+																										  border: 1px solid #ccc;
+																										  border-radius: 2px;
+																										  text-align: center;
+																										">
+						<input type="hidden" th:value="${model.id}" name="id" />
+						<input type="submit" value="Thêm giỏ hàng" class="red_button add_to_cart_button" style="border: none;"></input>
+					</div>
+				</div>
+			</div>
+		</div>
+		</form>
+
+	</div>
+
+	<!-- Tabs -->
+
+	<!-- Benefit -->
+
+	<div class="benefit">
+		<div class="container">
+			<div class="row benefit_row">
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-truck" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>miễn phí vận chuyển</h6>
+							<p>Giao hàng nhanh gọn</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-money" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>thanh toán khi nhận</h6>
+							<p>Không mất thêm phí</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-undo" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>1 đổi 1 trong 40 ngày</h6>
+							<p>Bảo hành 1 năm</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 benefit_col">
+					<div class="benefit_item d-flex flex-row align-items-center">
+						<div class="benefit_icon"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+						<div class="benefit_content">
+							<h6>mở cửa cả tuần</h6>
+							<p>8AM - 09PM</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Newsletter -->
+
+	<!-- Footer -->
+	<div th:replace="/web/fragments :: footer"></div>
+
+</div>
+
+<script th:src="@{/web/js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/web/styles/bootstrap4/popper.js}"></script>
+<script th:src="@{/web/styles/bootstrap4/bootstrap.min.js}"></script>
+<script th:src="@{/web/plugins/Isotope/isotope.pkgd.min.js}"></script>
+<script th:src="@{/web/plugins/OwlCarousel2-2.2.1/owl.carousel.js}"></script>
+<script th:src="@{/web/plugins/easing/easing.js}"></script>
+<script th:src="@{/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.js}"></script>
+<script th:src="@{/web/js/single_custom.js}"></script>
+
+</body>
+
+</html>

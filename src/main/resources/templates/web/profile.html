@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.thymeleaf.org" >
+<head>
+<title>Thông tin</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Colo Shop Template">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" th:href="@{/web/styles/bootstrap4/bootstrap.min.css}">
+<link th:href="@{/web/plugins/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" th:href="@{/web/plugins/OwlCarousel2-2.2.1/owl.carousel.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/web/plugins/OwlCarousel2-2.2.1/owl.theme.default.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/web/plugins/OwlCarousel2-2.2.1/animate.css}">
+<link rel="stylesheet" th:href="@{/web/plugins/themify-icons/themify-icons.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/web/styles/single_styles.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/web/styles/single_responsive.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/profile/main.css}">
+
+<style>
+		table {
+		  border-collapse: collapse;
+		  width: 100%;
+		}
+
+		th, td {
+		  text-align: left;
+		  padding: 10px;
+		}
+
+		tr:nth-child(even) {
+		  background-color: #f2f2f2;
+		}
+	</style>
+</head>
+
+<body>
+
+<div class="super_container">
+
+	<!-- Header -->
+	<div th:replace="/web/fragments :: header"></div>
+
+	<!-- Hamburger Menu -->
+
+	<div style="margin-top: 130px">
+		<section class="h-100 gradient-custom-2">
+		  <div class="container py-5 h-100">
+		    <div class="row d-flex justify-content-center align-items-center h-100">
+		      <div class="col col-lg-9 col-xl-7">
+		        <div class="card">
+		          <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
+		            <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
+		              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+		                alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+		                style="width: 150px; z-index: 1">
+		              <a th:href="@{/change-pass}" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
+		                style="z-index: 1;">
+		                Đổi mật khẩu
+		              </a>
+		            </div>
+		            <div class="ms-3" style="margin-top: 130px; margin-left: 20px;">
+		              <h5 th:text="${fullName}" style="color: white;"></h5>
+		              <p style="color: white;">Việt Nam</p>
+		            </div>
+		          </div>
+		          <div class="p-4 text-black" style="background-color: #f8f9fa;">
+		            <div class="d-flex justify-content-end text-center py-1">
+		              <div>
+		                <p th:text="${quantity}" class="mb-1 h5"></p>
+		                <p class="small text-muted mb-0">Đơn hàng</p>
+		              </div>
+		            </div>
+		          </div>
+		          <div th:if="${quantity==0}" class="card-body p-4 text-black"><span style="text-align: center;">Bạn chưa có đơn hàng nào!</span></div>
+		          <div class="card-body p-4 text-black" th:if="${quantity!=0}">
+		            <div class="mb-5">
+		              <p class="lead fw-normal mb-1">Đơn hàng</p>
+		              <div class="p-4" style="background-color: #f8f9fa;">
+		                <table>
+						  <thead>
+						    <tr>
+						      <th style="width: 100px;">Ngày đặt</th>
+						      <th style="width: 100px;">Tổng tiền</th>
+						      <th style="width: 100px;">SĐT</th>
+						      <th style="width: 150px;">Địa chỉ nhận</th>
+						      <th style="width: 100px;">Trạng thái</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr th:each="order :${orders}">
+						      <td th:text="${order.ngayDat}" style="width: 100px;"></td>
+						      <td th:text="${order.tongTien}" style="width: 100px;"></td>
+						      <td th:text="${order.soDienThoai}" style="width: 100px;"></td>
+						      <td th:text="${order.diaChiNhanHang}" style="width: 150px;"></td>
+						      <td th:if="${order.trangThai==0}" style="width: 100px;"><span>Đang chờ xác nhận</span></td>
+						      <td th:if="${order.trangThai!=0}" style="width: 100px;"><span>Đã xác nhận</span></td>
+						    </tr>
+						  </tbody>
+						</table>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</section>
+	</div>
+
+	<!-- Tabs -->
+
+	<!-- Benefit -->
+
+	<!-- Newsletter -->
+
+	<!-- Footer -->
+	<div th:replace="/web/fragments :: footer"></div>
+
+</div>
+
+<script th:src="@{/web/js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/web/styles/bootstrap4/popper.js}"></script>
+<script th:src="@{/web/styles/bootstrap4/bootstrap.min.js}"></script>
+<script th:src="@{/web/plugins/Isotope/isotope.pkgd.min.js}"></script>
+<script th:src="@{/web/plugins/OwlCarousel2-2.2.1/owl.carousel.js}"></script>
+<script th:src="@{/web/plugins/easing/easing.js}"></script>
+<script th:src="@{/web/plugins/jquery-ui-1.12.1.custom/jquery-ui.js}"></script>
+<script th:src="@{/web/js/single_custom.js}"></script>
+
+</body>
+
+</html>

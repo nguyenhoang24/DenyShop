@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.thymeleaf.org">
+<head th:replace="/admin/fragments :: head">
+</head>
+<body class="sb-nav-fixed">
+
+	<div th:replace="/admin/fragments :: navbar"></div>
+
+	<div id="layoutSidenav">
+
+		<div th:replace="/admin/fragments :: menu"></div>
+
+		<div id="layoutSidenav_content">
+			<main>
+				<form th:object="${model}" method="post" id="formSubmit"> 
+				
+					<h3 th:unless="${model.id}" class="text-center" style="margin-top:20px">Thêm loại sản phẩm</h3>
+					<h3 th:if="${model.id}" class="text-center" style="margin-top:20px">Cập nhật loại sản phẩm</h3>
+				
+					<div class="container">
+						<div class="row" >
+							<div class="col-12">
+								<label for="categoryCode" class="col-sm-3 control-label no-padding-right">Tên loại sản phẩm:</label>
+								<div class="col-sm-9">
+									<input class="col-xs-10 col-sm-5" id="tenLoaiSanPham" name="tenLoaiSanPham" th:field="*{tenLoaiSanPham}" th:value="${model.tenLoaiSanPham}"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="categoryCode" class="col-sm-3 control-label no-padding-right">Mô tả ngắn:</label>
+								<div class="col-sm-9">
+									<input class="col-xs-10 col-sm-5" id="moTaNgan" name="moTaNgan" th:field="*{moTaNgan}" th:value="${model.moTaNgan}"/>
+								</div>
+							</div>
+						
+						</div>
+							<input type="hidden" th:value="${model.id}" name="id" id="id"/>
+							<div style="margin-top:10px">
+									<button th:if="${model.id}"  class="btn btn-info" type="button" id="btnAddOrUpdateLoaiSanPham" name="btnAddOrUpdateLoaiSanPham">
+										<i class="ace-icon fa fa-check bigger-110"></i>Cập nhật
+									</button>
+									<button th:unless="${model.id}" class="btn btn-info" type="button" id="btnAddOrUpdateLoaiSanPham" name="btnAddOrUpdateLoaiSanPham">
+										<i class="ace-icon fa fa-check bigger-110"></i>Thêm
+									</button>
+							
+								<button class="btn" type="reset">
+									<i class="ace-icon fa fa-undo bigger-110"></i>Hủy
+								</button>
+							</div>
+						</div>
+				</form>
+			</main>
+
+			<footer th:replace="/admin/fragments :: footer"> </footer>
+
+		</div>
+	</div>
+	
+	<div th:replace="/admin/fragments :: scipt"></div>
+	
+<script>
+
+	
+	$( document ).ready(function() {
+		debugger;
+	    $('#btnAddOrUpdateLoaiSanPham').click(function (e) {
+			e.preventDefault();
+			var data = {};
+		    var formData = $('#formSubmit').serializeArray();
+		    $.each(formData, function (i, v) {
+	            data[""+v.name+""] = v.value;
+		    });
+		    var id = $('#id').val();
+		    if (id == "") {
+		    	addLoaiSanPham(data);
+		    } else {
+		    	updateLoaiSanPham(data);
+		    } 
+		});
+	});
+
+	
+	
+	function addLoaiSanPham(data) {
+		$.ajax({
+            url: '/api/loai-san-pham',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (result) {
+            	window.location.href = "/quan-tri/loai-san-pham/danh-sach";
+            },
+            error: function (error) {
+            	alert("sai")
+            	window.location.href = "/quan-tri/loai-san-pham/chinh-sua";
+            }
+        });
+	}
+	
+	function updateLoaiSanPham(data) {
+		$.ajax({
+            url: '/api/loai-san-pham',
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (result) {
+            	window.location.href = "/quan-tri/loai-san-pham/danh-sach";
+            },
+            error: function (error) {
+            	alert("sai")
+            	window.location.href = "/quan-tri/loai-san-pham/danh-sach";
+            }
+        });
+	}
+	
+</script>
+
+</body>
+</html>

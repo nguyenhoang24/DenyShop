@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="/web/fragments :: head">
+<title>DENY SHOP</title>
+</head>
+
+<body>
+
+<div class="super_container">
+
+	<!-- Header -->
+	<div th:replace="/web/fragments :: header"></div>
+	
+	
+	<!-- Slider -->
+
+	<div class="main_slider" th:style="'background-image: url(' + @{/getimage/background.jpg} + '); height: 70vh;'">
+		<div class="container fill_height">
+			<div class="row align-items-center fill_height">
+				<div class="col">
+					<div class="main_slider_content">
+						<h6 style="color: #FFFFFF">Uy tín / Đáng tin cậy</h6>
+						<h1 style="color: #FFFFFF">Giảm giá lên tới 30%</h1>
+						<div class="red_button shop_now_button"><a href="#">shop now</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Banner -->
+
+	<div class="banner">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="banner_item align-items-center" th:style="'background-image: url(' + @{/getimage/iphone.jpg} + '); height: 40vh;'">
+					</div>
+					<div class="banner_category">
+							<a th:href="@{/danh-sach(id=45)}">điện thoại</a>
+						</div>
+				</div>
+				<div class="col-md-4">
+					<div class="banner_item align-items-center" th:style="'background-image: url(' + @{/getimage/lap.jpg} + '); height: 40vh;'">
+					</div>
+					<div class="banner_category">
+							<a th:href="@{/danh-sach(id=46)}">máy tính</a>
+						</div>
+				</div>
+				<div class="col-md-4">
+					<div class="banner_item align-items-center" th:style="'background-image: url(' + @{/getimage/phukien2.jpg} + '); height: 40vh;'">
+					</div>
+					<div class="banner_category">
+							<a th:href="@{/danh-sach(id=47)}">phụ kiện</a>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- New Arrivals -->
+
+	<div class="new_arrivals">
+		<div class="container">
+			<div class="row">
+				<div class="col text-center">
+					<div class="section_title new_arrivals_title">
+						<h2>SẢN PHẨM NỔI BẬT</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
+							<!-- Product -->
+							<div class="product-item men" th:each="item :${list}">
+								<form th:action="@{/add-to-cart}" th:object="${model}" method="post">
+									<div class="product discount product_filter">
+										<div class="product_image">
+											<img th:src="@{'/getimage/'+${item.img}}" height="230" alt="">
+										</div>
+										<div class="favorite favorite_left"></div>
+										<div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>new</span></div>
+										<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-20%</span></div>
+										<div class="product_info">
+											<h6 class="product_name"><a th:href="@{/san-pham?id={id}(id=${item.id})}" th:text ="${item.tenSanPham}"></a></h6>
+											<div class="product_price" th:text ="'$'+${item.giaBan}"></div>
+										</div>
+									</div>
+									<input type="hidden" th:value="${item.id}" name="id" />
+									<input type="submit" value="Thêm giỏ hàng" class="red_button add_to_cart_button" style="border: none;"></input>
+								</form>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Deal of the week -->
+
+	<!-- Best Sellers -->
+
+	<!-- Benefit -->
+
+	<!-- Blogs -->
+
+	<!-- Newsletter -->
+
+	<div class="newsletter">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
+						<h4>Nhận email</h4>
+						<p>Thông báo khuyến mãi hoặc được tư vấn miễn phí</p>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<form action="post">
+						<div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
+							<input id="newsletter_email" type="email" placeholder="Nhập email hoặc số điện thoại" required="required" data-error="Valid email is required.">
+							<button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">gửi</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<div th:replace="/web/fragments :: footer"></div>
+
+</div>
+
+<div th:replace="/web/fragments :: script"></div>
+</body>
+
+</html>
