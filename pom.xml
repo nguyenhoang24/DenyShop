@@ -11,7 +11,7 @@
 	<groupId>com.laptrinhweb</groupId>
 	<artifactId>deny-shop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>deny-shop</name>
 	<description>deny-web</description>
 	<properties>
