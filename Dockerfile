@@ -3,6 +3,6 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 FROM openjdk:8-jdk-slim
-COPY --from=build /target/deny-shop-0.0.1-SNAPSHOT.jar deny-shop.jar
+COPY --from=build /target/deny-shop-0.0.1-SNAPSHOT.jar deny-shop-0.0.1-SNAPSHOT.jar
 EXPOSE 8072
-ENTRYPOINT ["java", "-jar", "deny-shop.jar"]
+ENTRYPOINT ["java", "-jar", "deny-shop-0.0.1-SNAPSHOT.jar"]
